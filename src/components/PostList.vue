@@ -16,7 +16,7 @@
           <span>招聘</span>
         </div>
       </li>
-      <li v-for="(post, index) in posts" :key="index">
+      <li v-for="(post,index) in posts" :key="index">
         <!--头像-->
         <img :src="post.author.avatar_url" alt="">
         <!--回复/浏览-->
@@ -32,14 +32,25 @@
           </span>
         </span>
         <!--标题-->
-        
-          <span class="title">
+        <router-link :to="{
+        name:'post_content',
+        params:{
+          id:post.id,
+          name:post.author.loginname
+        }
+        }">
+          <span>
           {{post.title}}
          </span>
+        </router-link>
         <!--最終回复时间-->
         <span class="last_reply">
           {{post.last_reply_at | formatDate}}
         </span>
+      </li>
+      <li>
+        <!--分页-->
+        <pagination @handleList="renderList"></pagination>
       </li>
     </ul>
   </div>
@@ -47,15 +58,18 @@
 </template>
 
 <script>
+  import pagination from './Pagination'
     export default {
         name: "PostList",
       data(){
           return {
             isLoading:false,
             posts:[],//代表页面的列表数组
+            postpage:1
           }
       },
       components:{
+        pagination
       },
       methods:{
           getData(){
@@ -73,14 +87,15 @@
                 //处理返回失败后的问题
                 console.log(err)
               })
-          }
+          },
+        renderList(value){
+          this.postpage = value;
+          this.getData();
+        }
       },
       beforeMount(){
         this.isLoading = true;//加载成功之前显示加载动画
         this.getData();//在页面加载之前获取数据
-      },
-      mounted(){
-        this.isLoading = false
       }
     }
 </script>
@@ -97,7 +112,6 @@
     height: 30px;
     width: 30px;
     vertical-align: middle;
-    cursor: pointer;
   }
 
   ul {
@@ -204,9 +218,5 @@
   .loading {
     text-align: center;
     padding-top: 300px;
-  }
-
-  .title:hover{
-    cursor: pointer;
   }
 </style>
