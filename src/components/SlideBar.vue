@@ -89,7 +89,7 @@
 
 <style scoped>
   .authersummay, .recent_replies, .recent_topics {
-    background-color: #fff;
+    background-color: #fcfcfc;
   }
   .autherinfo {
     width: 328px;

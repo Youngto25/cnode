@@ -87,8 +87,7 @@
       }
     }
 </script>
-
-<style >
+<style>
   @import url('../assets/markdown-github.css');
   .topbar {
     padding: 10px;
@@ -104,7 +103,7 @@
   }
 
   #reply, .topic_header {
-    background-color: #fff;
+    background-color: #fcfcfc;
   }
 
   #reply {

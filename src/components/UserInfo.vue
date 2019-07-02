@@ -80,7 +80,7 @@
 
 <style scoped>
   .userInfomation {
-    background: white;
+    background: #fcfcfc;
     width: 75%;
     margin: 10px auto;
   }

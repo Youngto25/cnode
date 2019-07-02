@@ -101,9 +101,6 @@
 </script>
 
 <style scoped>
-  .PostList{
-    background-color: #e1e1e1;
-  }
   .posts {
     margin-top: 10px;
   }
@@ -117,7 +114,6 @@
   ul {
     list-style: none;
     width: 100%;
-    max-width: 1344px;
     margin: 0 auto;
   }
 
@@ -126,7 +122,7 @@
     font-size: 15px;
     font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif !important;
     font-weight: 400;
-    background-color: white;
+    background-color: #fcfcfc;
     color: #333;
     border-top: 1px solid #f0f0f0;
   }
@@ -218,5 +214,10 @@
   .loading {
     text-align: center;
     padding-top: 300px;
+  }
+
+  ul{
+    padding-left: 0;
+    margin-left: 0;
   }
 </style>
