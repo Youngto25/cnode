@@ -5,36 +5,42 @@
       <router-view name="slidebar"></router-view>
       <router-view name="main"></router-view>
     </div>
-    <div class="footer"> 
-      <Footer></Footer>
-    </div>
   </div>
 </template>
-
 <script>
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import PostList from "./components/PostList";
 export default {
   name: "App",
   components: {
     Header,
-    PostList,
-    Footer
-  }
+    PostList
+  },
+  mounted(){}
 };
 </script>
+<style lang="scss" scoped>
+@media screen and (min-width: 800px){
+  #app{
+    background-color: #fff;
+  }
+  .main {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
 
-<style scoped>
-#app{
-  background-color: #fff;
+@media screen and (max-width: 799px){
+  #app{
+    background: #fff;
+    .main{
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+    }
+  }
 }
-.main {
-  width: 80%;
-  margin: 0 auto;
-}
-.footer{
-  background-color: #f7fbfd;
-  margin-top: 10px;
-}
+
 </style>

@@ -1,7 +1,7 @@
 <template>
 <div class="pagination">
-  <button @click="changeBtn">首页</button>
-  <button @click="changeBtn">上一页</button>
+  <button @click="changeBtn" class="bbb">首页</button>
+  <button @click="changeBtn" class="aaa">上一页</button>
   <button v-if="jduge" class="pagebtn">......</button>
   <button v-for="(btn,index) in pagebtns"
           :key="index"
@@ -9,7 +9,7 @@
   :class="[{currentPage:btn == currentPage},'pagebtn']">
     {{btn}}
   </button>
-  <button @click="changeBtn">下一页</button>
+  <button @click="changeBtn" class="aaa">下一页</button>
 </div>
 </template>
 
@@ -60,47 +60,82 @@
               //移除最后一个数字
             this.pagebtns.splice(5,1);
           }
-          debugger
           this.$emit('handleList',this.currentPage);
         }
       }
     }
 </script>
 
-<style scoped>
-  .pagination {
+<style lang="scss" scoped>
+.pagination {
+  background-color: white;
+  padding: 6px 20px;
+  border-radius: 5px;
+  border: 1px solid #888888;
+}
+
+button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #778087;
+  border-radius: 3px;
+  outline: none;
+  height: 21px;
+  cursor: pointer;
+  padding: 0 2px;
+  width: 55px;
+  height: 29px;
+}
+
+.pagebtn {
+  position: relative;
+}
+
+.currentPage {
+  color: white;
+  background-color: #1f1b1b;
+
+}
+
+@media screen and (max-width: 799px){
+  .pagination{
+    padding: 4px;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    button{
+      height: 21px;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      margin: 2px;
+    }
+    .aaa{
+      width: 48px;
+    }
+    .bbb{
+      width: 36px;
+    }
+  }
+}
+
+@media screen and (min-width: 800px){
+  .pagination{
     margin-top: 5px;
     margin-bottom: 20px;
-    background-color: white;
-    padding: 6px 20px;
-    border-radius: 5px;
-    /*box-shadow: 0px 2px 9px #888888;*/
-    border: 1px solid #888888;
   }
-
-  button {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    color: #778087;
-    border-radius: 3px;
-    outline: none;
+  button{
     height: 21px;
     cursor: pointer;
     padding: 0 2px;
     width: 55px;
     height: 29px;
   }
-
-  .pagebtn {
-    position: relative;
+  .pagebtn{
     bottom: 1px;
     width: 40px;
     margin: 0 4px;
   }
+}
 
-  .currentPage {
-    color: white;
-    background-color: #1f1b1b;
-
-  }
 </style>

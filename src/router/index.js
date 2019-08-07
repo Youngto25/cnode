@@ -4,6 +4,7 @@ import Article from '../components/Article'
 import PostList from '../components/PostList'
 import UserInfo from '../components/UserInfo'
 import SlideBar from '../components/SlideBar'
+import Login from '../components/Login'
 
 Vue.use(Router)
 
@@ -29,6 +30,13 @@ export default new Router({
       path:'/userinfo/:name',
       components:{
         main:UserInfo
+      }
+    },
+    {
+      name:'login',
+      path:'/login',
+      components:{
+        main:Login
       }
     }
   ]

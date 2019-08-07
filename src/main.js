@@ -4,7 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Axios from 'axios'
+import { Form , FormItem } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
+Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 }
+Vue.use('el-form',Form)
+Vue.use('el-form-item',FormItem)
 
 Vue.prototype.$http = Axios;
 Vue.config.productionTip = false
@@ -14,6 +19,7 @@ new Vue({
   router,
   render: h=>h(App)
 }).$mount('#app')
+
 Vue.filter('formatDate', function (str) {
     if (!str) return ''
     var date = new Date(str)

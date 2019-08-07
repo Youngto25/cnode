@@ -4,7 +4,7 @@
   <div class="loading" v-if="isLoading">
     <img src="../assets/loading.gif" >
   </div>
-  <div c v-else>
+  <div v-else>
     <div class="topic_header">
       <div class="topic_title">{{post.title}}</div>
       <ul>
@@ -15,7 +15,7 @@
         <li>• {{post.visit_count}}次浏览</li>
         <li>•来自{{post | tabFormatter}}</li>
       </ul>
-      <div v-html="post.content" class="topic_content"></div>
+      <div v-html="post.content" class="topic_content" ref="p"></div>
     </div>
     <div id="reply">
       <div class="topbar">回复</div>
@@ -52,119 +52,158 @@
   </div>
 </div>
 </template>
-
 <script>
-    export default {
-        name: "Article",
-       data(){
-          return {
-            isLoading:false,//是否正在加载
-            post:{}//代表当前文章页的所有内容，所有属性
+export default {
+  name: "Article",
+  data(){
+    return {
+      isLoading:false,//是否正在加载
+      post:{}//代表当前文章页的所有内容，所有属性
+    }
+  },
+  methods:{
+    getArticleData(){
+      this.$http.get(`https://cnodejs.org/api/v1/topic/${this.$route.params.id}`)
+        .then(res=>{
+          if(res.data.success == true){
+            this.isLoading =false;
+            this.post = res.data.data;
           }
-       },
-      methods:{
-          getArticleData(){
-            this.$http.get(`https://cnodejs.org/api/v1/topic/${this.$route.params.id}`)
-              .then(res=>{
-                if(res.data.success == true){
-                  this.isLoading =false;
-                  this.post = res.data.data;
-                }
-              })
-              .catch(function (err) {
-                console.log(err)
-              })
-          }
-      },
-      beforeMount(){
-          this.isLoading =true;
-          this.getArticleData();
-      },
-      watch:{
-          '$route'(to,from){
-            this.getArticleData()
-          }
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+    }
+  },
+  beforeMount(){
+    this.isLoading =true;
+    this.getArticleData();
+  },
+  mounted(){
+    this.$nextTick(()=>{
+      console.log(this.$el)
+      console.log(this.$el.querySelectorAll('p'))
+      console.log(this.$el.querySelector('.topic_content'))
+    })
+  },
+  watch:{
+    '$route'(to,from){
+      this.getArticleData()
+    }
+  },
+}
+</script>
+<style lang="scss" scoped>
+@import url('../assets/markdown-github.css');
+
+@media screen and (max-width: 799px){
+  .article{
+    width: 100vw;
+  }
+  .topic_header{
+    .topic_content{
+      p{
+        overflow: hidden;
       }
     }
-</script>
-<style>
-  @import url('../assets/markdown-github.css');
-  .topbar {
-    padding: 10px;
-    background-color: #f6f6f6;
-    height: 16px;
-    font-size: 12px;
-    margin-top: 10px;
   }
+  #reply img {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    bottom: -9px;
+  }
+}
 
+@media screen and (min-width: 800px){
   .article:not(:first-child) {
     margin-right: 340px;
     margin-top: 15px;
   }
-
-  #reply, .topic_header {
-    background-color: #fcfcfc;
+  
+  .markdown-text img {
+    width: 92% !important;
   }
-
-  #reply {
-    margin-top: 15px;
-  }
-
   #reply img {
     width: 30px;
     height: 30px;
     position: relative;
     bottom: -9px;
   }
+}
 
-  #reply a, #reply span {
-    font-size: 13px;
-    color: #666;
-    text-decoration: none;
-  }
-  .replySec{
-    border-bottom:1px solid #e5e5e5;
-    padding:0 10px;
-  }
+.topbar {
+  padding: 10px;
+  background-color: #f6f6f6;
+  height: 16px;
+  font-size: 12px;
+  margin-top: 10px;
+}
 
-  .loading {
-    text-align: center;
-    padding-top: 300px;
-  }
+#reply, .topic_header {
+  background-color: #fcfcfc;
+}
 
-  .replyUp a:nth-of-type(2) {
-    margin-left: 0px;
-    display: inline-block;
-  }
+#reply {
+  margin-top: 15px;
+}
 
-  .topic_header {
-    padding: 10px;
+#reply a, #reply span {
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+}
+.replySec{
+  border-bottom:1px solid #e5e5e5;
+  padding:0 10px;
+  p{
+    padding: 2px 0;
+    .markdown-text{
+      p{
+        padding: 2px 0;
+      }
+    }
   }
+}
 
-  .topic_title {
-    font-size: 20px;
-    font-weight: bold;
-    padding-top: 8px;
-  }
+.loading {
+  text-align: center;
+  padding-top: 300px;
+}
 
-  .topic_header ul {
-    list-style: none;
-    padding: 0px 0px;
-    margin: 6px 0px;
-  }
+.replyUp a:nth-of-type(2) {
+  margin-left: 0px;
+  display: inline-block;
+}
 
-  .topic_header li {
-    display: inline-block;
-    font-size: 12px;
-    color: #838383;
-  }
+.topic_header {
+  padding: 10px;
+}
 
-  .topic_content {
-    border-top: 1px solid #e5e5e5;
-    padding: 0 10px;
-  }
+.topic_title {
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 8px;
+}
 
-  .markdown-text img {
-    width: 92% !important;
-  }
+.topic_header ul {
+  list-style: none;
+  padding: 0px 0px;
+  margin: 6px 0px;
+}
+
+.topic_header li {
+  display: inline-block;
+  font-size: 12px;
+  color: #838383;
+}
+
+.topic_content {
+  border-top: 1px solid #e5e5e5;
+  padding: 0 10px;
+}
+
+
+
+
 </style>

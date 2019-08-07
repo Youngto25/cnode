@@ -53,54 +53,157 @@
         <pagination @handleList="renderList"></pagination>
       </li>
     </ul>
+    <footer>
+      <y-footer></y-footer>
+    </footer>
   </div>
 </div>
 </template>
 
 <script>
-  import pagination from './Pagination'
-    export default {
-        name: "PostList",
-      data(){
-          return {
-            isLoading:false,
-            posts:[],//代表页面的列表数组
-            postpage:1
-          }
-      },
-      components:{
-        pagination
-      },
-      methods:{
-          getData(){
-            this.$http.get('https://cnodejs.org/api/v1/topics',{
-              params:{
-                page:this.postpage,
-                limit:20
-              }
-            })
-              .then(res=>{
-                this.isLoading = false; //加载成功，去除动画
-                this.posts = res.data.data;
-              })
-              .catch(function (err) {
-                //处理返回失败后的问题
-                console.log(err)
-              })
-          },
-        renderList(value){
-          this.postpage = value;
-          this.getData();
-        }
-      },
-      beforeMount(){
-        this.isLoading = true;//加载成功之前显示加载动画
-        this.getData();//在页面加载之前获取数据
-      }
+import pagination from './Pagination'
+import Footer from './Footer'
+export default {
+  name: "PostList",
+  data(){
+    return {
+      isLoading:false,
+      posts:[],//代表页面的列表数组
+      postpage:1
     }
+  },
+  components:{
+    pagination,
+    'y-footer': Footer
+  },
+  methods:{
+      getData(){
+        this.$http.get('https://cnodejs.org/api/v1/topics',{
+          params:{
+            page:this.postpage,
+            limit:20
+          }
+        })
+          .then(res=>{
+            this.isLoading = false; //加载成功，去除动画
+            this.posts = res.data.data;
+          })
+          .catch(function (err) {
+            //处理返回失败后的问题
+            console.log(err)
+          })
+      },
+    renderList(value){
+      this.postpage = value;
+      this.getData();
+    }
+  },
+  beforeMount(){
+    this.isLoading = true;//加载成功之前显示加载动画
+    this.getData();//在页面加载之前获取数据
+  }
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@media screen and (max-width: 799px){
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  ul{
+    padding-left: 0;
+    margin-left: 0;
+  }
+  .PostList{
+    width: 100%;
+    padding: 0 8px;
+    .loading {
+      text-align: center;
+      padding-top: 300px;
+    }
+    .posts{
+      width: 100%;
+    }
+    img {
+      height: 25px;
+      width: 25px;
+      vertical-align: middle;
+    }
+  }
+  ul {
+    list-style: none;
+    width: 100%;
+    margin: 0 auto;
+    li{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .toobar span {
+        font-size: 14px;
+        color: #80bd01;
+        line-height: 40px;
+        margin: 0 10px;
+      }
+      &:not(:first-child) {
+        padding: 8px;
+        font-size: 12px;
+        font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif !important;
+        font-weight: 400;
+        background-color: #fcfcfc;
+        color: #333;
+        border-top: 1px solid #f0f0f0;
+        span {
+          line-height: 20px;
+        }
+        a{
+          margin-left: 4px;
+          span{
+            display: inline-block;
+            width: 42vw;
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap;
+          }
+        }
+        .allcount {
+          width: 80px;
+          display: inline-block;
+          text-align: center;
+          font-size: 12px;
+        }
+        .reply_count {
+          color: #9e78c0;
+          font-size: 12px;
+        }
+        .put_good, .put_top {
+          background: #80bd01;
+          padding: 2px 1px;
+          border-radius: 3px;
+          color: #fff;
+          font-size: 12px;
+        }
+        .topiclist-tab {
+          background-color: #e5e5e5;
+          color: #999;
+          padding: 2px 1px;
+          border-radius: 3px;
+          font-size: 12px;
+        }
+        .last_reply {
+          text-align: right;
+          min-width: 50px;
+          display: inline-block;
+          white-space: nowrap;
+          color: #778087;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 800px){
   .posts {
     margin-top: 10px;
   }
@@ -122,7 +225,7 @@
     font-size: 15px;
     font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif !important;
     font-weight: 400;
-    background-color: #fcfcfc;
+    background-color: #f5f5f5;
     color: #333;
     border-top: 1px solid #f0f0f0;
   }
@@ -180,7 +283,6 @@
     min-width: 50px;
     display: inline-block;
     white-space: nowrap;
-    float: right;
     color: #778087;
     font-size: 12px;
   }
@@ -220,4 +322,13 @@
     padding-left: 0;
     margin-left: 0;
   }
+  footer{
+    background-color: #fff;
+    margin-top: 10px;
+  }
+  footer.active{
+    position: relative; 
+    top: calc(100vh - 220px);
+  }
+}
 </style>
