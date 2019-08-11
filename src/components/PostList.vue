@@ -53,16 +53,11 @@
         <pagination @handleList="renderList"></pagination>
       </li>
     </ul>
-    <footer>
-      <y-footer></y-footer>
-    </footer>
   </div>
 </div>
 </template>
-
 <script>
 import pagination from './Pagination'
-import Footer from './Footer'
 export default {
   name: "PostList",
   data(){
@@ -73,8 +68,7 @@ export default {
     }
   },
   components:{
-    pagination,
-    'y-footer': Footer
+    pagination
   },
   methods:{
       getData(){
@@ -280,11 +274,10 @@ export default {
 
   .last_reply {
     text-align: right;
-    min-width: 50px;
-    display: inline-block;
     white-space: nowrap;
     color: #778087;
     font-size: 12px;
+    float: right;
   }
 
   .toobar {
@@ -321,14 +314,6 @@ export default {
   ul{
     padding-left: 0;
     margin-left: 0;
-  }
-  footer{
-    background-color: #fff;
-    margin-top: 10px;
-  }
-  footer.active{
-    position: relative; 
-    top: calc(100vh - 220px);
   }
 }
 </style>

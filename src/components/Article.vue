@@ -1,6 +1,5 @@
 <template>
 <div class="article">
-<!--如果正在加载显示此div-->
   <div class="loading" v-if="isLoading">
     <img src="../assets/loading.gif" >
   </div>
@@ -8,12 +7,19 @@
     <div class="topic_header">
       <div class="topic_title">{{post.title}}</div>
       <ul>
-        <li>•发布于：{{post.create_at | formatDate}}</li>
+        <li>• 发布于：{{post.create_at | formatDate}}</li>
         <li>• 作者：
-        {{post.author.loginname}}
+          <router-link :to="{
+            name:'user_info',
+            params:{
+              name:post.author.loginname
+            }
+          }">
+          {{post.author.loginname}}
+          </router-link>
         </li>
         <li>• {{post.visit_count}}次浏览</li>
-        <li>•来自{{post | tabFormatter}}</li>
+        <li>• 来自{{post | tabFormatter}}</li>
       </ul>
       <div v-html="post.content" class="topic_content" ref="p"></div>
     </div>
@@ -57,8 +63,8 @@ export default {
   name: "Article",
   data(){
     return {
-      isLoading:false,//是否正在加载
-      post:{}//代表当前文章页的所有内容，所有属性
+      isLoading: false,
+      post: {}
     }
   },
   methods:{
@@ -121,7 +127,7 @@ export default {
     margin-top: 15px;
   }
   
-  .markdown-text img {
+  .topic_content .markdown-text img {
     width: 92% !important;
   }
   #reply img {
@@ -130,6 +136,11 @@ export default {
     position: relative;
     bottom: -9px;
   }
+}
+
+a{
+  text-decoration: none;
+  color: #778087;
 }
 
 .topbar {
@@ -156,13 +167,17 @@ export default {
 .replySec{
   border-bottom:1px solid #e5e5e5;
   padding:0 10px;
+  .replyUp{
+    margin-bottom: 8px;
+    img{
+      height: 20px;
+      width: 20px;
+    }
+  }
   p{
     padding: 2px 0;
-    .markdown-text{
-      p{
-        padding: 2px 0;
-      }
-    }
+    color: #778087;
+    font-size: 14px;
   }
 }
 
@@ -196,14 +211,15 @@ export default {
   display: inline-block;
   font-size: 12px;
   color: #838383;
+  &:not(:last-child){
+    margin-right: 8px;
+  }
 }
 
 .topic_content {
   border-top: 1px solid #e5e5e5;
-  padding: 0 10px;
+  color: #778087;
+  font-size: 14px;
 }
-
-
-
 
 </style>

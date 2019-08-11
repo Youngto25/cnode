@@ -48,34 +48,33 @@
   </div>
 </div>
 </template>
-
 <script>
-    export default {
-        name: "UserInfo",
-      data(){
-          return {
-            isLoading:false,
-            userinfo:{}
-          }
-      },
-      methods:{
-          getData(){
-              this.$http.get(`https://cnodejs.org/api/v1/user/${this.$route.params.name}`)
-                .then(res=>{
-                  this.isLoading = false; //加载成功，去除动画
-                  this.userinfo = res.data.data;
-                })
-                .catch(function (err) {
-                  //处理返回失败后的问题
-                  console.log(err)
-                })
-          }
-      },
-      beforeMount(){
-        this.isLoading = true;//加载成功之前显示加载动画
-        this.getData();//在页面加载之前获取数据
+export default {
+  name: "UserInfo",
+  data(){
+      return {
+        isLoading:false,
+        userinfo:{}
       }
-    }
+  },
+  methods:{
+      getData(){
+          this.$http.get(`https://cnodejs.org/api/v1/user/${this.$route.params.name}`)
+            .then(res=>{
+              this.isLoading = false; //加载成功，去除动画
+              this.userinfo = res.data.data;
+            })
+            .catch(function (err) {
+              //处理返回失败后的问题
+              console.log(err)
+            })
+      }
+  },
+  beforeMount(){
+    this.isLoading = true;//加载成功之前显示加载动画
+    this.getData();//在页面加载之前获取数据
+  }
+}
 </script>
 
 <style lang="scss" scoped>
