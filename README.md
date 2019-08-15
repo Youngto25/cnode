@@ -60,6 +60,7 @@ export default new Router({
   }">
   {{post.author.loginname}}
   </router-link>
+</li>
 ```
 
 通过 conde 社区提供的 API 获取作者相关信息
