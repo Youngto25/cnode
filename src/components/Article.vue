@@ -134,7 +134,7 @@ a{
 }
 
 .topbar {
-  width: 96%;
+  width: 98%;
   margin: 0 auto;
   padding: 10px 20px;
   background-color: #f6f6f6;
