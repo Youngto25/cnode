@@ -21,7 +21,7 @@
         <li>• {{post.visit_count}}次浏览</li>
         <li>• 来自{{post | tabFormatter}}</li>
       </ul>
-      <div v-html="post.content" class="topic_content" ref="p"></div>
+      <div v-html="post.content" class="topic_content" id="content" ref="p"></div>
     </div>
     <div id="reply">
       <div class="topbar">回复</div>
@@ -43,7 +43,7 @@
           }">
             <span>{{reply.author.loginname}}</span>
           </router-link>
-          <span>
+          <span class="lou">
           {{index+1}}楼
         </span>
           <span v-if="reply.ups.length>0" >
@@ -52,7 +52,7 @@
           <span v-else>
         </span>
         </div>
-      <p v-html="reply.content"></p>
+      <p v-html="reply.content" id="content"></p>
       </div>
     </div>
   </div>
@@ -86,11 +86,7 @@ export default {
     this.getArticleData();
   },
   mounted(){
-    this.$nextTick(()=>{
-      console.log(this.$el)
-      console.log(this.$el.querySelectorAll('p'))
-      console.log(this.$el.querySelector('.topic_content'))
-    })
+    this.$nextTick(()=>{})
   },
   watch:{
     '$route'(to,from){
@@ -130,12 +126,6 @@ export default {
   .topic_content .markdown-text img {
     width: 92% !important;
   }
-  #reply img {
-    width: 30px;
-    height: 30px;
-    position: relative;
-    bottom: -9px;
-  }
 }
 
 a{
@@ -144,15 +134,16 @@ a{
 }
 
 .topbar {
-  padding: 10px;
+  width: 96%;
+  margin: 0 auto;
+  padding: 10px 20px;
   background-color: #f6f6f6;
-  height: 16px;
   font-size: 12px;
-  margin-top: 10px;
+  border: 1px solid #cccccc;
 }
 
 #reply, .topic_header {
-  background-color: #fcfcfc;
+  //background-color: #fcfcfc;
 }
 
 #reply {
@@ -165,25 +156,47 @@ a{
   text-decoration: none;
 }
 .replySec{
-  border-bottom:1px solid #e5e5e5;
   padding:0 10px;
+  margin: 8px 0;
   .replyUp{
-    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid #cccccc;
+    border-bottom: none;
+    background: #f6f6f6;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    position: relative;
     img{
-      height: 20px;
-      width: 20px;
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .lou{
+      position: absolute;
+      right: 10px;
     }
   }
   p{
-    padding: 2px 0;
+    padding: 8px;
     color: #778087;
     font-size: 14px;
+    border: 1px solid #cccccc;
+    border-top: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    word-wrap: break-word;
   }
 }
 
 .loading {
   text-align: center;
   padding-top: 300px;
+  img{
+    border-radius: 50%;
+  }
 }
 
 .replyUp a:nth-of-type(2) {
@@ -199,12 +212,14 @@ a{
   font-size: 20px;
   font-weight: bold;
   padding-top: 8px;
+  text-align: center;
 }
 
 .topic_header ul {
   list-style: none;
   padding: 0px 0px;
   margin: 6px 0px;
+  text-align: center;
 }
 
 .topic_header li {
@@ -217,9 +232,11 @@ a{
 }
 
 .topic_content {
-  border-top: 1px solid #e5e5e5;
-  color: #778087;
+  border: 1px solid #cccccc;
+  color: #000000;
   font-size: 14px;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 </style>

@@ -6,8 +6,10 @@
   </div>
   <div class="userInfomation" v-else>
     <section>
-      <img :src="userinfo.avatar_url" >
-      <span>{{userinfo.loginname}}</span>
+      <dir class="logo">
+        <img :src="userinfo.avatar_url" >
+        <span>{{userinfo.loginname}}</span>
+      </dir>
       <p>
         {{userinfo.score}}积分
       </p>
@@ -59,20 +61,19 @@ export default {
   },
   methods:{
       getData(){
-          this.$http.get(`https://cnodejs.org/api/v1/user/${this.$route.params.name}`)
-            .then(res=>{
-              this.isLoading = false; //加载成功，去除动画
-              this.userinfo = res.data.data;
-            })
-            .catch(function (err) {
-              //处理返回失败后的问题
-              console.log(err)
-            })
+        this.$http.get(`https://cnodejs.org/api/v1/user/${this.$route.params.name}`)
+          .then(res=>{
+            this.isLoading = false;
+            this.userinfo = res.data.data;
+          })
+          .catch(function (err) {
+            console.log(err)
+          })
       }
   },
   beforeMount(){
-    this.isLoading = true;//加载成功之前显示加载动画
-    this.getData();//在页面加载之前获取数据
+    this.isLoading = true;
+    this.getData();
   }
 }
 </script>
@@ -96,10 +97,11 @@ export default {
 }
 .userInfomation section {
   padding: 12px;
+  p{
+    margin: 4px 0;
+  }
 }
-.userInfomation img {
-  width: 30px;
-}
+
 .userInfomation li {
   list-style:none;
 }
@@ -126,6 +128,17 @@ export default {
 .userInfomation > div >ul > li > a {
   color: #094E99;
   text-decoration: none;
+}
+
+.logo{
+  display: flex;
+  align-items: center;
+  img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
 }
 
 </style>

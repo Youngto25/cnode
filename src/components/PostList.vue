@@ -123,6 +123,7 @@ export default {
       height: 25px;
       width: 25px;
       vertical-align: middle;
+      border-radius: 50%;
     }
   }
   ul {
@@ -206,6 +207,7 @@ export default {
     height: 30px;
     width: 30px;
     vertical-align: middle;
+    border-radius: 50%;
   }
 
   ul {

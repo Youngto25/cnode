@@ -1,7 +1,7 @@
 <template>
 <div class="autherinfo">
   <div class="authersummay">
-    <div class="topbar">作者</div>
+    <div class="topbar"><span>作者</span></div>
     <router-link :to="{
           name:'user_info',
           params:{
@@ -12,7 +12,7 @@
     </router-link>
   </div>
   <div class="recent_topics">
-    <div class="topbar">作者最近主题</div>
+    <div class="topbar"><span>作者最近主题</span></div>
     <ul>
       <li v-for="(list,index) in topcilimitby5" :key="index">
         <router-link :to="{
@@ -28,7 +28,7 @@
     </ul>
   </div>
   <div class="recent_replies">
-    <div class="topbar">作者最近回复</div>
+    <div class="topbar"><span>作者最近回复</span></div>
     <ul>
       <li v-for="(list,index) in replylimitby5" :key="index">
         <router-link :to="{
@@ -63,7 +63,6 @@ export default {
           this.userinfo = res.data.data;
         })
         .catch(function (err) {
-          //处理返回失败后的问题
           console.log(err)
         })
     }
@@ -87,23 +86,25 @@ export default {
 }
 </script>
 
-<style scoped>
-.authersummay, .recent_replies, .recent_topics {
-  background-color: #fcfcfc;
+<style lang="scss" scoped>
+.authersummay{
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  border-top: none;
 }
 .autherinfo {
   width: 328px;
   float: right;
-  margin-top: 0;
 }
 li{
   padding: 3px 0 ;
 }
 .recent_replies ul, .recent_topics ul {
-  margin-top: 0px;
-  margin-bottom: 0px;
   list-style: none;
-  padding-left: 14px;
+  border: 1px solid #cccccc;
+  padding: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 ul a {
@@ -113,17 +114,25 @@ ul a {
 }
 
 .topbar {
-  padding: 10px;
   background-color: #f6f6f6;
-  height: 16px;
   font-size: 12px;
   margin-top: 10px;
+  display: flex;
+  align-items: center;
+  height: 24px;
+  border: 1px solid #cccccc;
+  border-bottom: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  span{
+    margin-left: 8px;
+  }
 }
 
 img {
   height: 48px;
   width: 48px;
-  border-radius: 3px;
+  border-radius: 50%;
   margin: 10px;
 }
 

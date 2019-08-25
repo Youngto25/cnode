@@ -64,7 +64,6 @@ export default {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .pagination {
   background-color: white;
